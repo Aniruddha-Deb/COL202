@@ -1,0 +1,61 @@
+\documentclass[12pt,answers]{exam}
+\usepackage[utf8]{inputenc}
+\usepackage{amsfonts,amsthm,amsmath, amssymb}
+\usepackage[colorlinks=true]{hyperref}
+\usepackage[a4paper, margin=0.75in]{geometry}
+
+\title{\vspace{-2em}COL202 Scratchpad\vspace{-0.3em}}
+\author{Aniruddha Deb\vspace{-1em}}
+\date{\vspace{-1.5em}}
+\unframedsolutions
+
+\renewcommand{\solutiontitle}{\vspace{-1em}\noindent\textit{Solution:}\enspace}
+
+\begin{document}
+\maketitle
+\pagestyle{empty}
+\begin{questions}
+
+\question Let $n$ be a positive integer. You are given a set of $n+1$ distinct
+positive integers, each of which is less than or equal to $2n$. Use mathematical
+induction to show that there is at least one integer in this set that divides 
+another integer in this set.
+\begin{solution}
+\underline{Lemma:} If there are $n-1$ integers ($n \ge 3$) in $3$ and $2n-2$ inclusive, then
+either two of them divide each other, or there exists a number that divides 
+either $2n-1$ or $2n$.
+
+\underline{Proof:} Proceed by Induction. 
+
+\underline{Base Case:} $n=3$. Then, we are given $3$ and $4$, and $3$ divides $6$.
+The base case holds.
+
+\underline{Inductive step:} given $n$ integers in $3$ and $2n$ inclusive, 
+
+Proceed by Induction:
+
+\underline{Base Case:} $n=1$. We're then given two integers, $1$ and $2$. Since
+$1$ divides $2$, the claim holds.
+
+\underline{Induction hypothesis:} Claim that if $n-1$ is a positive integer and 
+we are given $n$ distinct positive integers, each less than or equal to $2n-2$,
+then there is at least one integer in this set that divides another integer in 
+this set.
+
+\underline{Inductive step:} given $n+1$ distinct positive integers, each less
+than or equal to $2n$. Suppose the set of integers we are given is $S$. Two cases arise:
+\begin{itemize}
+	\item $2n \text{and} 2n-1 \in S$: There are $n-1$ distinct positive integers
+	less than or equal to $2n-2$. Call this set $S'$. Assume that no two numbers 
+	in $S'$ divide each other, and $1,2 \not \in S'$. Therefore, $\forall s \in S', 
+	3 \le s \le 2n-2$. By pigeonhole principle, there exists at least even number
+	or odd number in $S'$. 
+	\item $2n \text{and} 2n-1 \not \in S$: There are $n$ distinct positive integers that 
+	are less than or equal to $2n-2$, hence, by induction hypothesis, the claim
+	is true.
+\end{itemize}
+\end{solution}
+
+\end{questions}
+
+\end{document}

@@ -1,0 +1,106 @@
+\documentclass[12pt,answers]{exam}
+\usepackage[utf8]{inputenc}
+\usepackage{amsfonts,amsthm,amsmath, amssymb}
+\usepackage[colorlinks=true]{hyperref}
+\usepackage[a4paper, margin=0.75in]{geometry}
+
+\title{\vspace{-2em}COL202 Homework 1\vspace{-0.3em}}
+\author{Aniruddha Deb, Prabal Singh\vspace{-1em}}
+\date{September 2021}
+\unframedsolutions
+
+\renewcommand{\solutiontitle}{\vspace{-1em}\noindent\textit{Solution:}\enspace}
+
+\begin{document}
+\maketitle
+\pagestyle{empty}
+\begin{questions}
+
+\question An IPL tournament is played between $n$ cricket teams, where each team plays exactly one match with every other team. How many matches are played? (This is easy.) Assume that no match ends in a tie. We say that a subset $S$ of teams is \textit{consistent} if it is possible to order teams in $S$ as $T_1,\ldots,T_{|S|}$ (think of this as the strongest to weakest ordering) such that for every $i,j$ with $1\leq i<j\leq|S|$, $T_i$ beats $T_j$. Prove that irrespective of the outcomes of the matches, there always exists a consistent subset $S$ with $|S|\geq\log_2 n$.
+\begin{solution}
+We shall prove by induction that there exists a consistent subset of size $m$ in a tournament with $2^m$ nodes.
+
+\underline{Proof:} 
+
+Base case: in a tournament of size $2^1$, there are two nodes, either of which form a consistent subset
+
+Induction hypothesis: In a tournament of size $2^{m-1}$, there exists a consistent subset of $m-1$ nodes
+
+Now, consider a tournament of size $2^{m}$. Select any team $T$ from this tournament. By pigeonhole principle, T either wins against at least $2^{m-1}$ teams or loses to at least $2^{m-1}$ teams. 
+\begin{itemize}
+    \item Case 1: $T$ wins against $2^{m-1}$ teams. There exists a consistent subset of $m-1$ nodes in the $2^{m-1}$ teams $T$ wins against, hence there is a consistent subset in the $2^m$ teams which includes $T$ such that $T$ wins against all other $m-1$ teams.
+    \item Case 2: $T$ loses to $2^{m-1}$ teams. There exists a consistent subset of $m-1$ nodes in the $2^{m-1}$ teams $T$ loses to, hence there is a consistent subset in the $2^m$ teams which includes $T$ such that $T$ loses to all other $m-1$ teams.
+\end{itemize}
+
+Hence, there exists a consistent subset of size atleast $\lfloor \log_2 n\rfloor$ in a tournament of size $n$.\hfill $\square$
+\end{solution}
+
+\question Call a non-empty subset $S$ of integers \textit{nice} if, for every $x,y\in S$ and every two integers $a,b$, we have $ax+by\in S$. Observe that the set of multiples of any integer is a nice set. Prove that, in fact, these are the only nice sets. In other words, prove that for every nice set $S$ there exists an integer $x$ such that $S=\{ax\mid a\in\mathbb{Z}\}$. (You might find one of the results from the tutorial useful.)
+\begin{solution}
+From Bézout's identity (Q8 of the tutorial) we get that if $\text{gcd}(a,b) = d$, then there exist $x,y \in \mathbb{Z}$ such that $ax + by = d$. Now, consider a set $S = \{x_1, x_2, ....\}$ that is nice. . 
+
+\begin{itemize}
+    \item Case 1: there exists $x_i, x_j \in S$ such that $\text{gcd}(x_i,x_j) = 1$. we have $1 \in S$. Hence, every element can be expressed as $a + bx_i$, $x_i \in S, a,b \in \mathbb{Z}$. We can express any integer $n$ in this form, as $a$ is the remainder and $b$ is the quotient when $n$ is divided by $x_i$, hence $S = \mathbb{Z}$. Therefore, $S = \{ a \cdot 1 | a \in \mathbb{Z}\}$
+    \item Case 2: there does not exist $x_i, x_j \in S$ such that $\text{gcd}(x_i,x_j) = 1$: Then, suppose $\underset{i,j \in \mathbb{N}}{\text{min}}\ \text{gcd}(x_i,x_j) = d$. Every number can be expressed as $ax_i + bx_j = d(ax_i' + bx_j')$. Hence, $S = \{ad\ |\ a \in \mathbb{Z}\}$.
+\end{itemize}
+
+This proves our claim.\hfill $\square$
+\end{solution}
+
+\question Prove ``Claim 2'' from the proof of Schr\"{o}der-Bernstein Theorem discussed in Lecture 5. Here is the statement of the claim. Let $A$ and $B$ be infinite sets, $f$ be an injection from $A$ to $B$, and $g$ be an injection from $B$ to $A$. Let $B'=\{b\in B\mid\exists b^*\in B\setminus\text{Im}(f)\text{ }\exists k\in\mathbb{N}\cup\{0\}:\text{ }b=(f\circ g)^k(b^*)\}$, and $A'=\{g(b)\mid b\in B'\}$. Then for every $b\in B$, the following statements are equivalent.
+\begin{enumerate}
+\item $b\in B'$.
+\item If $f^{-1}(b)$ exists, then it is in $A'$.
+\item $g(b)\in A'$.
+\end{enumerate}
+\begin{solution}
+
+\underline{(1)$\Rightarrow$(2)}: Since $b=(f\circ g)^k(b^*)$ exists, $k \geq 1$. Therefore, $$f^{-1}(b) = f^{-1}(f \circ g)^k (b^*) = g(f \circ g)^{k-1} (b^*)$$ but since $$(f \circ g)^{k-1} (b^*) \in B' \implies g((f \circ g)^{k-1} (b^*)) \in A$$ Therefore $f^{-1}(b) \in A$
+
+\vspace{1em}
+\underline{(2)$\Rightarrow$(3)}: If $f^{-1}(b)$ exists, then it is in $A'$, this implies $f^{-1}(b) = g(b')$ for some $b' \in B'$. This means 
+$$(f \circ g)(b') \in B'\ \text{or}\ b \in B'$$
+Then by definition of $A'$, $g(b) \in A'$
+
+\vspace{1em}
+\underline{(3)$\Rightarrow$(1)}: $g(b)\in A' \Rightarrow b \in A'$. Since $g(b) \in A'$, there exists $b$ such that $b \in B'$ \hfill $\square$
+\end{solution}
+
+\question Given a set $A$, the set of finite length strings over $A$ is denoted by $A^*$. Prove that if $A$ is a finite set, then $A^*$ is necessarily countable. What can you say about the cardinality of $A^*$ if $A$ is countably infinite instead?
+\begin{solution}
+Denote by $A^*_i$ the set of finite length strings having length equal to $i$. If $A$ is finite, then so is $A^*_i$, as $|A^*_i| = |A|^i$. Since the union of countably many finite sets is countable, we have $$A^* = \bigcup_{i \in \mathbb{N}}A^*_i$$ is countable.
+
+If $A$ is countably infinite instead, then $A^*_i$ is countable, by the same logic (There is a bijection between $A^*_i$ and $A \times A \times \cdots \times A$, $i$ times). Since $A \times A \times \cdots \times A$ is countable, $A^*_i$ is also countable, and the countable union of countable sets is countable. Therefore, $A_i^*$ is also countable. \hfill $\square$
+\end{solution}
+
+\question Prove by mathematical induction that every graph has at least two vertices having equal degree.
+\begin{solution}
+
+Base case: in a graph with $2$ nodes, only two cases arise: either the nodes are connected to each other or they are not. In either case, both nodes have equal degree.
+
+Induction hypothesis: If $P(k)$ is the proposition that a graph with $k$ vertices has at least two vertices having equal degree, then $P(n-1)$ is true.
+
+Consider a graph with $n-1$ vertices. Let $a,b \in V$ be the two vertices having equal degree. Assume that all other vertices have distinct number of edges. The n-1 vertices will have no. of edges from among $\{0,1, \ldots, d, \ldots, n-2 \}$, where $d$ is the degree which corresponds to 2 vertices.
+
+Observation: All the numbers in $\{0,1, \ldots, d, \ldots, n-2 \} \setminus \{d\}$ corresponds to 1 vertex exactly, (Except of course only one of $\{0,n-2\}$ will have a corresponding vertex). So we have a one-one correspondence between $n-3$ vertices and $\{0,1, \ldots,d,\ldots,n-2 \} \setminus \{d\}$.
+
+\vspace{1em}
+Add a new vertex $c$ to this graph. Two cases arise:
+\begin{itemize}
+    \item Case 1: $c$ is connected to both $a,b$ or neither $a$ nor $b$: the degree of $a$ and $b$ doesn't change, and hence they still have the same degree.
+    \item Case 2: We join the first edge from $c$ to $a$.
+    \begin{itemize}
+        \item Case 2.1: A vertex corresponding to $d+1$, say $i$, already exists; Then i and a are vertices of same degree now
+        \item Case 2.2: A vertex corresponding to $d+1$, say $i$, does not exist; Then a vertex corresponding to 1, say $i$, definitely exists. (Since there is a one to one correspondence from $n-3$ vertices to $D = \{0,1, \ldots,d,\ldots,n-2 \} \setminus \{d\}$, with $n-2$ elements, only 1 element in $D$ to which no vertex corresponds.) So, $i$ and $c$ have same degree.
+    \end{itemize}
+    The same cases as above arise when you add the next edge (For the second edge, either vertex with degree 2 exists, or if the edge is drawn to one of two vertices with same degree $d$, a vertex with degree $d+1$ exists). Hence, we can go on adding edges between $c$ and rest of the vertices, and in every stage we have a pair of vertices of same degree. This process ends for some  $k \leq n-1$ edges.
+\end{itemize}
+
+If there are more than 2 (say $q$) vertices with same degree, say $d$, new vertex $c$ forms edge with $0 \leq k \leq q$ of the vertices, either $k \geq 2$ or $q-k \geq 2$. We either get a pair with degree $d$ or with a degree $d+1$
+
+Hence $P(n-1) \Rightarrow P(n)$, and by induction, $P(n)$ holds for all $n$. \hfill $\square$
+\end{solution}
+
+\end{questions}
+
+\end{document}

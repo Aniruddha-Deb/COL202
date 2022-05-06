@@ -1,0 +1,66 @@
+\documentclass[12pt,answers]{exam}
+\usepackage[utf8]{inputenc}
+\usepackage{amsfonts,amsthm,amsmath, amssymb, mathtools}
+\usepackage[colorlinks=true]{hyperref}
+\usepackage[a4paper, margin=0.75in]{geometry}
+\usepackage{graphicx}
+
+\title{\vspace{-2em}COL202 Homework 3\vspace{-0.3em}}
+\author{Aniruddha Deb, Prabal Singh\vspace{-1em}}
+\date{October 2021}
+\unframedsolutions
+
+\renewcommand{\solutiontitle}{\vspace{-1em}\noindent\textit{Solution:}\enspace}
+
+\begin{document}
+\maketitle
+\pagestyle{empty}
+\begin{questions}
+
+\question Recall that we defined an intersecting family to be a collection of subsets of a given set $S$ such that no two sets in the collection are disjoint. We also proved that when $S$ is a finite set with $|S|=n$, the size of the largest intersecting family of subsets of $S$ is $2^{n-1}$. What if we want an intersecting family in which every set has the same given size, say $k$ (a.k.a. a $k$-uniform intersecting family)? Let us find an answer to this question. Observe that when $k>n/2$, the answer is trivial, so let us assume $k\leq n/2$.
+\begin{enumerate}
+\item\textbf{[1 point]} Prove that there exists a $k$-uniform intersecting family containing $C(n-1,k-1)$ sets ($C(n-1,k-1)$ denotes ``$(n-1)$ choose $(k-1)$'').
+\item\textbf{[1 point]} Suppose $A\subseteq S$ and $|A|=k$. Imagine that the elements of $S$ are to be assigned to $n$ distinct places on the circumference of a circle. How many ways are there to do so in such a way that elements of $A$ appear consecutively?
+\item\textbf{[2 points]} Suppose $\mathcal{F}$ is a family of subsets of $S$, each of size $k$, and $|\mathcal{F}|>C(n-1,k-1)$. Prove that the elements of $S$ can be arranged on the circle in such a way that the elements of more than $k$ of the sets in $\mathcal{F}$ appear consecutively. (Hint: Double counting + pigeon-hole.)
+\item\textbf{[2 points]} Hence argue that if $|\mathcal{F}|>C(n-1,k-1)$, then $\mathcal{F}$ cannot be a $k$-uniform intersecting family.
+\end{enumerate}
+
+\begin{solution}
+\begin{enumerate}
+    \item \begin{proof} Proceed by Construction. Consider a set $S$ such that $|S| = n$. Pick one element from this set $s$. Then, we construct an intersecting family $F = \{S_i\}$ such that $\{s\} \subseteq S_i \cap S_j$ for all $S_i,S_j \in F,\ i \ne j$. Since $\{s\} \in S_i\ \forall\ i$, there are $C(n-1,k-1)$ ways of choosing the remaining $k-1$ elements from the leftover $n-1$ elements in $S \setminus \{s\}$. Therefore, $F$ exists and $|F| = C(n-1,k-1)$.
+    \end{proof}
+    % clarify this once with prof: are the seats distinct/identical??
+    \item If the elements of $A$ are to appear consecutively, then there are $n$ distinct ways of marking out the places where the elements of $A$ go (since the seats on the circle are distinct), and then $k!$ ways of arranging the elements of $A$, and $(n-k)!$ ways of arranging the elements of $S \setminus A$. Hence, the total number of ways is $\boxed{n\cdot k!(n-k)! }$
+    \item \begin{proof}Proceed by contradiction: We claim that no such $S$ exists, and reach a contradiction while double counting the number of pairs $(f,c)$, where $f \in \mathcal{F}$ and $c$ is a cyclic arrangement that contains the elements of $f$ consecutively. The number of cyclic arrangements that contain the elements of $f$ consecutively are $n \cdot k!(n-k)!$ (as proven above). Since there are $|\mathcal{F}|$ possible choices for $f$, the number of pairs is $|\mathcal{F}| \cdot n \cdot k!(n-k)!$. 
+    
+    The second way of counting is that there are $n!$ cyclic arrangements of the elements of $S$ on the circle. In a cyclic arrangement, if we are to pick $k$ consecutive elements on the circumference for each arrangement such that no two such sets overlap, then we can pick at most $k$ such consecutive intervals for $f$. Hence the number of pairs is at most $k \cdot n!$.
+    
+    From the above two, we get $|\mathcal{F}| \cdot n \cdot k!(n-k)! \le k \cdot n!$. This implies $|\mathcal{F}| \le C(n-1,k-1)$, which is a contradiction. Hence, there exists a set $S$ such that it is possible for more than $k$ subsets to have their elements appear consecutively.\end{proof}
+    
+    \item We prove the contrapositive: if $\mathcal{F}$ is a $k$-uniform intersecting family, then $|\mathcal{F}| \le C(n-1,k-1)$. Proceeding similarly to above, if we double count the pairs $(f,c)$, we get $|\mathcal{F}| \cdot n \cdot k!(n-k)! \le k \cdot n! \implies |\mathcal{F}| \le C(n-1,k-1)$.
+\end{enumerate} 
+\end{solution}
+
+\question Consider the poset $(2^S,\subseteq)$, where $S=\{1,\ldots,n\}$ for some $n\in\mathbb{N}$. A non-empty chain $\{A_1,A_2,\ldots,A_k\}$ of this poset, where $A_1\subseteq A_2\subseteq\cdots\subseteq A_k$, is said to be a \textit{symmetric chain} if $|A_1|+|A_k|=n$ and $|A_{i+1}|=|A_i|+1$ for each $i=1,\ldots,k-1$.
+\begin{enumerate}
+\item\textbf{[2 points]} Prove that the set $2^S$ can be partitioned into symmetric chains. (Hint: Induction on $n$.)
+\item\textbf{[2 points]} Using the above result, find the size of the largest antichain in $2^S$ as a function of $n$, and prove your answer.
+\end{enumerate}
+
+\begin{solution}
+\begin{enumerate}
+    {\item \begin{proof} Proceed by Induction.
+    
+    \underline{Base Case}: $n=1$. A valid partition into symmetric chains is $\{\phi,\{1\}\}$.
+    
+    \underline{Induction Hypothesis}: Claim that the set $2^{S'}$ can be partitioned into symmetric chains for $S' = \{1,2,\ldots,n-1\}$.
+    
+    \underline{Induction Step}: Consider $S = \{1,2,\ldots,n\}$. Now, consider the following partition of $2^S$: $S_1 = 2^{S\setminus \{n\}}$ and $S_2 = 2^S \setminus 2^{S\setminus \{n\}}$. Observe that $|S_1| = |S_2| = 2^{|S|-1}$. By induction hypothesis, $S_1$ can be partitioned into symmetric chains. We now construct a bijection $f:S_2 \to S_1$ such that $f(s) = s \setminus \{n\}$. This is a bijection since every element has a unique image in $S_1$, and $|S_1| = |S_2|$. Hence, we can construct the same partition for $S_2$ as we did for $S_1$. Therefore, we can successfully partition $S$ into symmetric chains.\end{proof}}
+    
+    {\item Since every element of $2^S$ needs to be in a chain, consider the set of subsets of $S$ of size $k$. This set forms an antichain. The largest such antichain has $C(n,n/2)$ elements (if $n$ is even), or $C(n,(n-1)/2)$ elements (if $n$ is odd). We claim this is the largest antichain of $2^S$. Consider the Hasse diagram of this relation: the indegree of the elements of the $\lfloor n/2 \rfloor$th row is atleast one less than the outdegree of the elements of the row below it. Hence, by Hall's theorem, no perfect matching exists. Similarily, the outdegree of the elements of the $\lceil n/2\rceil$th row is atleast one less than the indegree of the elements of the row above it. Again, by Hall's theorem, no perfect matching exists. Hence, there are symmetric chains consisting of the elements of the $\lceil n/2\rceil$th and $\lfloor n/2\rfloor$th rows that do not extend above them. Hence, the maximum size of the antichain is equal to the number of elements in the $\lceil n/2\rceil$th, or the $\lfloor n/2\rfloor$th row, which is equal to the number of ways to pick subsets of size $\lfloor n/2\rfloor$ from $S$, which is simply $\boxed{C(n,\lfloor n/2 \rfloor)}$}
+\end{enumerate}
+\end{solution}
+
+
+\end{questions}
+\end{document}
